@@ -30,17 +30,14 @@ The library is intentionally simple and has minimal dependencies, making it suit
 
 ## Requirements
 
-The current implementation uses POSIX functionality such as `getline()` and `strdup()`.
-
-Therefore, the current version is intended primarily for:
+The current implementation uses POSIX functionality such as `getline()` and `strdup()`along with Windows compatibility for getline function is added.
+Therefore, the current version supports:
 
 - Linux
 - Unix-like systems
 - POSIX-compatible environments
 - WSL
-
-A fully portable Windows implementation is not currently the goal of this version.
-
+- Windows
 ---
 
 # Installation
