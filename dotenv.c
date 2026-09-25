@@ -4,6 +4,60 @@
 #include <ctype.h>
 #include "dotenv.h"
 
+#ifdef _WIN32
+
+static int getline(
+    char **lineptr,
+    size_t *n,
+    FILE *stream)
+{
+    if (!lineptr || !n || !stream)
+        return -1;
+
+    if (*lineptr == NULL || *n == 0) {
+        *n = 256;
+        *lineptr = malloc(*n);
+
+        if (!*lineptr)
+            return -1;
+    }
+
+    size_t pos = 0;
+
+    int c;
+
+    while ((c = fgetc(stream)) != EOF) {
+
+        if (pos + 1 >= *n) {
+
+            size_t new_size = *n * 2;
+
+            char *new_ptr =
+                realloc(*lineptr, new_size);
+
+            if (!new_ptr)
+                return -1;
+
+            *lineptr = new_ptr;
+            *n = new_size;
+        }
+
+        (*lineptr)[pos++] = (char)c;
+
+        if (c == '\n')
+            break;
+    }
+
+    if (pos == 0 && c == EOF)
+        return -1;
+
+    (*lineptr)[pos] = '\0';
+
+    return (int)pos;
+}
+
+#endif
+
 static ConfigItem *config_table = NULL;
 static size_t config_count = 0;
 static size_t config_capacity = 0;
