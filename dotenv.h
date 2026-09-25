@@ -10,7 +10,7 @@ typedef struct {
 } ConfigItem;
 
 // Public interface declarations
-int load_dotenv(void);
+int load_dotenv(const char *filename);
 const char* get_env(const char *key);
 const char* get_env_or(const char *key,const char *default_value);
 void free_dotenv(void);
